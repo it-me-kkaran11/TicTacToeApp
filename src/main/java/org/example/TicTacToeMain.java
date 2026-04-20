@@ -1,25 +1,30 @@
 package org.example;
 
 public class TicTacToeMain {
+    public static boolean isValidMove(int row, int col, char[][] board) {
 
-    // Method to convert slot number (1–9) into row & column
-    public static int[] convertSlotToIndex(int slot) {
-        if (slot < 1 || slot > 9) {
-            throw new IllegalArgumentException("Slot must be between 1 and 9.");
+        if (row < 0 || row > 2 || col < 0 || col > 2) {
+            System.out.println("Invalid move! Out of bounds.");
+            return false;
+        }
+        if (board[row][col] != ' ') {
+            System.out.println("Invalid move! Cell already occupied.");
+            return false;
         }
 
-        // Zero-based math: slot-1
-        int row = (slot - 1) / 3;   // integer division
-        int col = (slot - 1) % 3;   // modulo for column
-
-        return new int[]{row, col};
+        return true;
     }
 
-    // Demo main method
     public static void main(String[] args) {
-        for (int slot = 1; slot <= 9; slot++) {
-            int[] indices = convertSlotToIndex(slot);
-            System.out.println("Slot " + slot + " → Row: " + indices[0] + ", Col: " + indices[1]);
-        }
+
+        char[][] board = {
+                {' ', ' ', ' '},
+                {' ', 'X', ' '},
+                {' ', ' ', 'O'}
+        };
+
+        System.out.println(isValidMove(0, 0, board));
+        System.out.println(isValidMove(1, 1, board));
+        System.out.println(isValidMove(3, 0, board));
     }
 }
