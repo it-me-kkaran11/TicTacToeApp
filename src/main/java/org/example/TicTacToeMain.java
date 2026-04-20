@@ -1,34 +1,25 @@
 package org.example;
 
-import java.util.Scanner;
-
 public class TicTacToeMain {
 
-    // Method to read user slot input
-    public static int getUserSlot() {
-        Scanner sc = new Scanner(System.in);
-        int slot;
-
-        while (true) {
-            System.out.print("Enter a slot number (1–9): ");
-            if (sc.hasNextInt()) {
-                slot = sc.nextInt();
-                if (slot >= 1 && slot <= 9) {
-                    return slot;
-                } else {
-                    System.out.println("Invalid slot! Please enter a number between 1 and 9.");
-                }
-            } else {
-                System.out.println("Invalid input! Please enter an integer.");
-                sc.next();
-            }
+    // Method to convert slot number (1–9) into row & column
+    public static int[] convertSlotToIndex(int slot) {
+        if (slot < 1 || slot > 9) {
+            throw new IllegalArgumentException("Slot must be between 1 and 9.");
         }
+
+        // Zero-based math: slot-1
+        int row = (slot - 1) / 3;   // integer division
+        int col = (slot - 1) % 3;   // modulo for column
+
+        return new int[]{row, col};
     }
 
-
+    // Demo main method
     public static void main(String[] args) {
-        int userSlot = getUserSlot();
-        System.out.println("You selected slot: " + userSlot);
-        // control returns to game logic here
+        for (int slot = 1; slot <= 9; slot++) {
+            int[] indices = convertSlotToIndex(slot);
+            System.out.println("Slot " + slot + " → Row: " + indices[0] + ", Col: " + indices[1]);
+        }
     }
 }
